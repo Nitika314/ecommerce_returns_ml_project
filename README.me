@@ -1,0 +1,134 @@
+E-Commerce Product Returns Prediction
+
+Overview
+
+This project predicts whether an e-commerce order will be returned using machine learning. The objective is to identify high-risk orders early so businesses can reduce reverse logistics costs, operational waste, and fraud exposure.
+
+This is a binary classification problem, where:
+
+1 = Returned
+
+0 = Not Returned
+
+
+Why This Problem Matters
+
+Product returns are expensive and disruptive. Missing a return is far more costly than flagging a non-return incorrectly.
+For this reason, Recall is prioritized over Accuracy throughout model selection.
+
+Dataset
+
+File: ecommerce_returns_dataset.csv
+
+Target: Return
+
+Key Features:
+
+Price
+
+Previous_Returns
+
+Customer_Tenure_Months
+
+Order_Hour
+
+Product_Category
+
+Delivery_Speed
+
+
+Approach (End-to-End Pipeline)
+
+Missing numeric values handled using median imputation
+
+Categorical features encoded using one-hot encoding
+
+Stratified train–test split (75% / 25%)
+
+Feature scaling applied post-split to avoid data leakage
+
+Multiple models trained and evaluated using consistent metrics
+
+
+
+Models Evaluated
+
+Support Vector Machine (RBF)
+
+Naive Bayes
+
+K-Nearest Neighbors
+
+Random Forest (class-weighted)
+
+Model Performance (Sorted by Recall)
+Model	Accuracy	Precision	Recall	F1 Score	ROC-AUC
+Random Forest	0.986	0.983	0.976	0.980	0.996
+SVM	0.919	0.906	0.848	0.876	0.971
+Naive Bayes	0.829	0.763	0.712	0.736	0.904
+KNN	0.848	0.830	0.688	0.753	0.895
+
+Selected Model: Random Forest
+Chosen due to the highest Recall, minimizing missed returns while maintaining strong precision.
+
+
+Key Insights (Feature Importance)
+
+Top drivers of product returns identified by the Random Forest model:
+
+Price (47.2%)
+
+Previous_Returns (20.5%)
+
+Customer_Tenure_Months (9.6%)
+
+Product_Category_Clothing (8.0%)
+
+Delivery_Speed_SameDay (5.9%)
+
+
+Interpretation:
+Higher-priced items, customers with a return history, and fast-delivery clothing orders are significantly more likely to be returned.
+
+Design Decisions
+
+Recall prioritized over accuracy due to asymmetric business cost
+
+Median imputation used to handle skewed price distributions
+
+Class-weighted Random Forest used to handle imbalance
+
+Feature importance analyzed to ensure interpretability, not just performance
+
+
+Limitations & Next Steps
+
+No cross-validated hyperparameter tuning
+
+No cost-sensitive loss function
+
+Static dataset assumption
+
+No deployment or real-time inference pipeline
+
+Future improvements would focus on cost-based optimization and probability calibration.
+
+Tech Stack:
+Python
+NumPy, Pandas
+Matplotlib, Seaborn
+scikit-learn
+
+
+How to Run
+
+Place ecommerce_returns_dataset.csv in the project directory
+
+Run the script end-to-end
+
+Review printed metrics and visualizations
+
+Final Note
+
+This project demonstrates practical ML decision-making, not just model fitting.
+Model choice, metrics, and trade-offs were driven by business impact, not leaderboard accuracy.
